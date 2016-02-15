@@ -1,3 +1,16 @@
+/* ****************************************************************************
+ * Author:       Richard Leone
+ * Written:      2/12/2016
+ * Last Updated  2/12/2016
+ *
+ * Compilation:  javac DequeTester
+ * Execution:    java DequeTester
+ *
+ *
+ * Name:         DequeTester Class
+ * Description:  JUnit test for each method in the Deque class
+ * Dependencies: StdIn.class of the algs4.jar library
+ *****************************************************************************/ 
 import static org.junit.Assert.*;
 
 import java.util.Iterator;
@@ -21,16 +34,16 @@ public class DequeTester {
 		addLastQ = new Deque<String>();
 		
 		
-		smallQ.addFirst(new String("smallQ: firstString"));
-		smallQ.addFirst(new String("smallQ: secondString"));
-		smallQ.addFirst(new String("smallQ: thirdString"));
+		smallQ.addFirst("smallQ: firstString");
+		smallQ.addFirst("smallQ: secondString");
+		smallQ.addFirst("smallQ: thirdString");
 		
-		oneStringQ.addLast(new String("oneStringQ added last"));
+		oneStringQ.addLast("oneStringQ added last");
 		
-		addLastQ.addLast(new String("addLastQ: firstString"));
-		addLastQ.addLast(new String("addLastQ: secondString"));
-		addLastQ.addLast(new String("addLastQ: thirdString"));
-		addLastQ.addLast(new String("addLastQ: fourthString"));
+		addLastQ.addLast("addLastQ: firstString");
+		addLastQ.addLast("addLastQ: secondString");
+		addLastQ.addLast("addLastQ: thirdString");
+		addLastQ.addLast("addLastQ: fourthString");
 	}
 
 	@Test
@@ -153,31 +166,41 @@ public class DequeTester {
 	}
 	@Test
 	public void testIterator() {
-		
-		//Test that iterators are independent
+
+		// Test that iterators are independent and the next() method
 		Iterator<String> smallQIter = smallQ.iterator();
-		for(String s: smallQ) {
+		for (String s : smallQ) {
 			String ss = smallQIter.next();
-		    assertEquals("Testing Iterator for smallQ deque", true, s.equals(ss));
+			assertEquals("Testing Iterator for smallQ deque", true,
+					s.equals(ss));
 		}
-		//Test remove throws exception
+		// Test that calling next when there are no more items to return throws exception
+		try {
+			smallQIter.next();
+			fail("iterator.next() has no more items to return");
+		} 
+		catch (NoSuchElementException e) {
+			StdOut.println("Correctly handled calling Iterator next() on exhausted deque");
+		}
+		// Test remove throws exception
 		try {
 			smallQIter = smallQ.iterator();
 			smallQIter.remove();
 			fail("iterator.remove is not supported");
-		}
+		} 
 		catch (UnsupportedOperationException e) {
-			StdOut.println("Correctly handled calling Iterator remove");
+			StdOut.println("Correctly handled calling Iterator remove()");
 		}
-		//Test operations on an empty deque.
+		// Test operations on an empty deque.
 		Iterator<String> emptyQIter = emptyQ.iterator();
-		assertEquals("Testing size for emptyQ deque", false, emptyQIter.hasNext());
-		try{ 
+		assertEquals("Testing size for emptyQ deque", false,
+				emptyQIter.hasNext());
+		try {
 			emptyQIter.next();
 			fail("Check next() on empty deque");
-		}
+		} 
 		catch (NoSuchElementException e) {
-			StdOut.println("Correctly handled calling next on empty deque");
+			StdOut.println("Correctly handled calling next() on empty deque");
 		}
 	}
 
