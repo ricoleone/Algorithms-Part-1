@@ -9,7 +9,8 @@
  * Description: An immutable data type for points in the plane.
  *
  *************************************************************************/
-
+import edu.princeton.cs.algs4.StdDraw;
+import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -24,10 +25,9 @@ public class Point implements Comparable<Point> {
      *
      */
     private class SlopeOrder implements Comparator<Point> {
-
         public int compare(Point point1, Point point2) {
-            Double pointOneSlope = Point.this.slopeTo(point1);
-            Double pointTwoSlope = Point.this.slopeTo(point2);
+            double pointOneSlope = Point.this.slopeTo(point1);
+            double pointTwoSlope = Point.this.slopeTo(point2);
             if (pointOneSlope < pointTwoSlope)
                 return -1;
             else if (pointOneSlope > pointTwoSlope)
@@ -82,12 +82,14 @@ public class Point implements Comparable<Point> {
      * @return the slope between this point and the specified point
      */
     public double slopeTo(Point that) {
-        if (compareTo(that) == 0)
+        // No duplicate points allowed so remove compareTo to see if they are equal
+        if (this.compareTo(that) == 0)
             return Double.NEGATIVE_INFINITY;
         if (this.x == that.x)
             return Double.POSITIVE_INFINITY;
-        if (this.y == that.y)
+        if (this.y == that.y) {
             return 0.0;
+        }
         return Double.valueOf(that.y - this.y) / (that.x - this.x);
     }
 
